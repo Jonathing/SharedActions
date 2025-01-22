@@ -94,7 +94,7 @@ permissions:
 jobs:
   notify-discord-start:
     name: Notify Discord (start)
-    uses: Jonathing/SharedActions/.github/workflows/discord-build-notifier.yml@main
+    uses: Jonathing/SharedActions/.github/workflows/discord-build-notifier.yml@feat/jonathing/subproject-versioning-test
     with:
       build_status: started
       filter_folder: ${{ inputs.subproject }}
@@ -167,7 +167,7 @@ jobs:
     name: Notify Discord (end)
     needs: [ "notify-discord-start", "gradle" ]
     if: ${{ always() }}
-    uses: Jonathing/SharedActions/.github/workflows/discord-build-notifier.yml@main
+    uses: Jonathing/SharedActions/.github/workflows/discord-build-notifier.yml@feat/jonathing/subproject-versioning-test
     with:
       build_status: ${{ needs.gradle.result }}
       build_number: ${{ needs.notify-discord-start.outputs.build_number }}
@@ -178,7 +178,7 @@ jobs:
     name: Promote artifact
     needs: [ "notify-discord-start", "gradle" ]
     if: needs.gradle.result == 'success' && inputs.artifact_name != 'dont promote' && inputs.artifact_names == ''
-    uses: Jonathing/SharedActions/.github/workflows/promote-artifact.yml@main
+    uses: Jonathing/SharedActions/.github/workflows/promote-artifact.yml@feat/jonathing/subproject-versioning-test
     with:
       group: ${{ inputs.artifact_group }}
       artifact: ${{ inputs.artifact_name }}
@@ -193,7 +193,7 @@ jobs:
     name: Promote artifacts
     needs: [ "notify-discord-start", "gradle" ]
     if: needs.gradle.result == 'success' && inputs.artifact_name == 'dont promote' && inputs.artifact_names != ''
-    uses: Jonathing/SharedActions/.github/workflows/promote-artifacts.yml@main
+    uses: Jonathing/SharedActions/.github/workflows/promote-artifacts.yml@feat/jonathing/subproject-versioning-test
     with:
       groups: ${{ inputs.artifact_groups }}
       artifacts: ${{ inputs.artifact_names }}
